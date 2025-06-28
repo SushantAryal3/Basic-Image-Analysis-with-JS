@@ -97,7 +97,9 @@ function applyMask() {
       masked[i + 2] = b;
       masked[i + 3] = 255;
     } else {
-      masked[i] = masked[i + 1] = masked[i + 2] = 0;
+      masked[i] = 255;
+      masked[i + 1] = 255;
+      masked[i + 2] = 255;
       masked[i + 3] = 255;
     }
   }
@@ -136,7 +138,7 @@ function handleBrush(e) {
 let brushSize = 10;
 
 function paintAt(x, y) {
-  mCtx.fillStyle = "rgb(0,0,0)";
+  mCtx.fillStyle = "rgb(255,255,255)";
   mCtx.fillRect(x - brushSize / 2, y - brushSize / 2, brushSize, brushSize);
 }
 
