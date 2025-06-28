@@ -248,40 +248,55 @@ function clearImageMemory() {
   updateAndMask();
 }
 
-// --- save & apply settings table ----------
 function saveSettings() {
-  const img = originalFilename || "unknown",
-    cs = colorSpace.value;
+  const img = originalFilename || "unknown_image";
+  const cs = colorSpace.value;
+
+  const tableId = cs === "RGB" ? "settingsTableRGB" : "settingsTableHSV";
+  const tbody = document.getElementById(tableId).querySelector("tbody");
+
+  let col1, col2, col3, applyFn, args;
   if (cs === "RGB") {
-    const [r0, r1] = [sliderR.result.from, sliderR.result.to],
-      [g0, g1] = [sliderG.result.from, sliderG.result.to],
-      [b0, b1] = [sliderB.result.from, sliderB.result.to];
-    const tbody = document
-      .getElementById("settingsTableRGB")
-      .querySelector("tbody");
-    const tr = document.createElement("tr");
-    tr.innerHTML = `
-      <td>${img}</td>
-      <td>${r0}–${r1}</td>
-      <td>${g0}–${g1}</td>
-      <td>${b0}–${b1}</td>
-      <td><button onclick="applySavedRGB(${r0},${r1},${g0},${g1},${b0},${b1})">Apply</button></td>
-    `;
-    tbody.appendChild(tr);
+    const [r0, r1] = [sliderR.result.from, sliderR.result.to];
+    const [g0, g1] = [sliderG.result.from, sliderG.result.to];
+    const [b0, b1] = [sliderB.result.from, sliderB.result.to];
+    col1 = `${r0}–${r1}`;
+    col2 = `${g0}–${g1}`;
+    col3 = `${b0}–${b1}`;
+    applyFn = `applySavedRGB(${r0},${r1},${g0},${g1},${b0},${b1})`;
   } else {
-    const [h0, h1] = [sliderH.result.from, sliderH.result.to],
-      [s0, s1] = [sliderS.result.from, sliderS.result.to],
-      [v0, v1] = [sliderV.result.from, sliderV.result.to];
-    const tbody = document
-      .getElementById("settingsTableHSV")
-      .querySelector("tbody");
+    const [h0, h1] = [sliderH.result.from, sliderH.result.to];
+    const [s0, s1] = [sliderS.result.from, sliderS.result.to];
+    const [v0, v1] = [sliderV.result.from, sliderV.result.to];
+    col1 = `${h0}–${h1}`;
+    col2 = `${s0}–${s1}`;
+    col3 = `${v0}–${v1}`;
+    applyFn = `applySavedHSV(${h0},${h1},${s0},${s1},${v0},${v1})`;
+  }
+
+  let existingRow = null;
+  for (let row of tbody.rows) {
+    if (row.cells[0].textContent === img) {
+      existingRow = row;
+      break;
+    }
+  }
+
+  if (existingRow) {
+    existingRow.cells[1].textContent = col1;
+    existingRow.cells[2].textContent = col2;
+    existingRow.cells[3].textContent = col3;
+    existingRow.cells[4]
+      .querySelector("button")
+      .setAttribute("onclick", applyFn);
+  } else {
     const tr = document.createElement("tr");
     tr.innerHTML = `
       <td>${img}</td>
-      <td>${h0}–${h1}</td>
-      <td>${s0}–${s1}</td>
-      <td>${v0}–${v1}</td>
-      <td><button onclick="applySavedHSV(${h0},${h1},${s0},${s1},${v0},${v1})">Apply</button></td>
+      <td>${col1}</td>
+      <td>${col2}</td>
+      <td>${col3}</td>
+      <td><button onclick="${applyFn}">Apply</button></td>
     `;
     tbody.appendChild(tr);
   }
