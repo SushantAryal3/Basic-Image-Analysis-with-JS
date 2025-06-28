@@ -14,8 +14,12 @@
   <body>
     <h3>Upload Image</h3>
     <input type="file" id="upload" accept="image/*" />
-
-    <div class="sliders">
+    <label for="colorSpace">Color Space:</label>
+    <select id="colorSpace">
+      <option value="RGB" selected>RGB</option>
+      <option value="HSV">HSV</option>
+    </select>
+    <div id="rgbSliders" class="sliders">
       <div>
         <label>Red: <span id="rangeRVal"></span></label>
         <input id="rangeR" type="text" name="rangeR" />
@@ -27,6 +31,20 @@
       <div>
         <label>Blue: <span id="rangeBVal"></span></label>
         <input id="rangeB" type="text" name="rangeB" />
+      </div>
+    </div>
+    <div id="hsvSliders" class="sliders" style="display: none">
+      <div>
+        <label>Hue: <span id="rangeHVal"></span></label>
+        <input id="rangeH" type="text" />
+      </div>
+      <div>
+        <label>Saturation: <span id="rangeSVal"></span></label>
+        <input id="rangeS" type="text" />
+      </div>
+      <div>
+        <label>Value: <span id="rangeVVal"></span></label>
+        <input id="rangeV" type="text" />
       </div>
     </div>
 
@@ -50,15 +68,29 @@
     <button onclick="saveSettings()">Save Current Settings</button>
 
     <div id="savedSettings" style="margin-top: 20px">
-      <h4>Saved Settings:</h4>
-      <table id="settingsTable" border="1" cellspacing="0" cellpadding="5">
+      <h4>Saved RGB Settings:</h4>
+      <table id="settingsTableRGB" border="1" cellspacing="0" cellpadding="5">
         <thead>
           <tr>
             <th>Image Name</th>
-            <th>Red Range</th>
-            <th>Green Range</th>
-            <th>Blue Range</th>
-            <th>Apply This Value</th>
+            <th>Red</th>
+            <th>Green</th>
+            <th>Blue</th>
+            <th>Apply</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+
+      <h4 style="margin-top: 20px">Saved HSV Settings:</h4>
+      <table id="settingsTableHSV" border="1" cellspacing="0" cellpadding="5">
+        <thead>
+          <tr>
+            <th>Image Name</th>
+            <th>Hue</th>
+            <th>Saturation</th>
+            <th>Value</th>
+            <th>Apply</th>
           </tr>
         </thead>
         <tbody></tbody>
