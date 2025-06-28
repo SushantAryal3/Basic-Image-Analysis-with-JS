@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Interactive RGB Threshold Mask</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/ion-rangeslider@2.3.1/css/ion.rangeSlider.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/ion-rangeslider@2.3.1/js/ion.rangeSlider.min.js"></script>
+  </head>
+  <body>
+    <h3>Upload Image</h3>
+    <input type="file" id="upload" accept="image/*" />
+
+    <div class="sliders">
+      <div>
+        <label>Red: <span id="rangeRVal"></span></label>
+        <input id="rangeR" type="text" name="rangeR" />
+      </div>
+      <div>
+        <label>Green: <span id="rangeGVal"></span></label>
+        <input id="rangeG" type="text" name="rangeG" />
+      </div>
+      <div>
+        <label>Blue: <span id="rangeBVal"></span></label>
+        <input id="rangeB" type="text" name="rangeB" />
+      </div>
+    </div>
+
+    <div class="canvases">
+      <canvas id="originalCanvas"></canvas>
+
+      <div class="canvas-wrapper">
+        <canvas id="maskedCanvas"></canvas>
+        <button id="brushToggle" class="icon-btn" title="Toggle Brush Mode">
+          🖌
+        </button>
+        <button id="downloadBtn" class="icon-btn" title="Download Mask">
+          ⬇️
+        </button>
+      </div>
+    </div>
+    <div class="brush-control">
+      <label>Brush Size: <span id="brushSizeVal">10</span></label>
+      <input type="range" id="brushSize" min="2" max="100" value="10" />
+    </div>
+    <button onclick="saveSettings()">Save Current Settings</button>
+
+    <div id="savedSettings" style="margin-top: 20px">
+      <h4>Saved Settings:</h4>
+      <table id="settingsTable" border="1" cellspacing="0" cellpadding="5">
+        <thead>
+          <tr>
+            <th>Image Name</th>
+            <th>Red Range</th>
+            <th>Green Range</th>
+            <th>Blue Range</th>
+            <th>Apply This Value</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
